@@ -13,7 +13,17 @@ class SVGElement {
 
     }
     append(element) {
-        const parent = element.typeof === String ? document.querySelector(element) : element.node;
+        const parent = (typeof element === "string") ? document.querySelector(element) : element.node;
+        parent.appendChild(this.node);
         return this;
+    }
+}
+
+class Sight {
+    constructor(selector, width, height) {
+        this.svg = new SVGElement('svg').attr({viewbox: `0 0 ${width} ${height}`}).append(selector);
+    }
+    draw(type, attrs) {
+        return new SVGElement(type).attr(attrs).append(this.svg);
     }
 }
